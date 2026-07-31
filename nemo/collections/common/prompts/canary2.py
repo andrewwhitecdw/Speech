@@ -202,12 +202,13 @@ def canary2(cut: Cut, prompt: Canary2PromptFormatter) -> dict[str, torch.Tensor]
     turns = [dict(role="user", slots=slots)]
     # If data has no transcript, create empty response with <eos> only.
     text = ' '.join(s.text for s in cut.supervisions if s.text is not None)
+    lang = cut.supervisions[0].language if cut.supervisions else None
     turns.append(
         dict(
             role="assistant",
             slots={
                 "text": text,
-                prompt.PROMPT_LANGUAGE_SLOT: ifnone(cut.supervisions[0].language, cut.custom.get("target_lang")),
+                prompt.PROMPT_LANGUAGE_SLOT: ifnone(lang, cut.custom.get("target_lang")),
             },
         ),
     )
