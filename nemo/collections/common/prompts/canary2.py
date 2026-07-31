@@ -142,8 +142,7 @@ def map_manifest_values_to_special_tokens(slot_values: dict[str, str]) -> dict[s
     any_special_token_present = False
 
     for k in ("source_lang", "target_lang"):
-        if k in slot_values and not ((v := slot_values[k]).startswith("<|") and v.endswith("|>")):
-            val = slot_values[k]
+        if k in slot_values and not ((val := slot_values[k]).startswith("<|") and val.endswith("|>")):
             slot_values[k] = "<|" + val + "|>"
             any_special_token_present = True
 
